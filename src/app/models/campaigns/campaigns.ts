@@ -1,4 +1,4 @@
-export class PromoCodes {
+export class Campaigns {
   code: string;
   name: string;
   description?: string;
