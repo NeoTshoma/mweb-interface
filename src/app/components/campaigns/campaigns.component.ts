@@ -1,10 +1,11 @@
+import { GetAllProducts } from './../../app-store/actions/products.action';
 import { getCampaigns, getCampaignsLoading, getCampaignErrors } from 'src/app/app-store/selectors/campaigns.selector';
 import { IMwebState } from './../../app-store/state';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Campaigns } from 'src/app/models/campaigns/campaigns';
+import { Campaign, Campaigns } from 'src/app/models/campaigns/campaigns';
 import { Provider } from 'src/app/models/providers/providers';
 import { PriceRange } from 'src/app/models/price-ranges/price-range';
 
@@ -20,6 +21,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   campaigns: Campaigns;
   providers: Provider[];
   prices: PriceRange[];
+  promoCodes: string[];
 
   constructor(private store: Store<IMwebState>) { }
 
@@ -57,8 +59,17 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     ).subscribe((campaigns: Campaigns) => {
       if (campaigns) {
         this.campaigns = campaigns;
+        this.promoCodes = this.campaigns.campaigns[0].promocodes;
+
+        this.getProducts(this.campaigns.campaigns[0]);
       }
     });
+  }
+
+  getProducts(campaign: Campaign) {
+    const promocodes = campaign.promocodes.join();
+
+    this.store.dispatch(GetAllProducts({promocodes}));
   }
 
   ngOnDestroy() {

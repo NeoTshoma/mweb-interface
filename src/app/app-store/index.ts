@@ -1,8 +1,11 @@
 import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { AppReducer } from './reducers/campaigns.reducer';
-import { ICampaignState, IMwebState } from './state';
+import { ProductsReducer } from './reducers/products.reducer';
+import { IMwebState } from './state';
 
 export const reducers: ActionReducerMap<IMwebState> = {
-  MwebAppState: AppReducer
+  MwebAppState: AppReducer,
+  MwebProductsState: ProductsReducer
 };
+
 export const metaReducers: MetaReducer<IMwebState>[] = [];

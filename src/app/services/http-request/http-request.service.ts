@@ -19,8 +19,8 @@ export class HttpRequestService {
     return this.httpClient.get(`${this.rootUrl}/${endpoint}`, this.httpOptions);
   }
 
-  getByIdRequest(uri1: string, uri2: any): Observable<any> {
-    const url = `${this.rootUrl}/${encodeURI(uri1)}/${encodeURI(uri2)}/`;
+  getByQueryRequest(endpoint: string, parameter: any, suffix: string): Observable<any> {
+    const url = `${this.rootUrl}/${endpoint}/${parameter}/${suffix}`;
     return this.httpClient.get<any>(url);
   }
 }

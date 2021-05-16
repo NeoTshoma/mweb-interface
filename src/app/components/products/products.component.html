@@ -1,0 +1,19 @@
+<h5>Products</h5>
+<div class="row" *ngIf="(productsLoading$ | async)">
+  <div class="col-12 d-flex justify-content-center">
+    <app-loader ></app-loader>
+  </div>
+</div>
+<div class="row" *ngIf="!(productsLoading$ | async)">
+  <div class="col-6 mt-3" *ngFor="let product of products">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">{{ product.promoCodeDescription }}</h6>
+        <p class="card-text">
+          {{ product.promoCodeTagLine ? product.promoCodeTagLine : 'Another one of our lovely offerings'}}
+        </p>
+        <a href="#" class="btn btn-primary">Check Coverage</a>
+      </div>
+    </div>
+  </div>
+</div>

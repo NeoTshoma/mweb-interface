@@ -12,10 +12,10 @@ export class Campaign {
   name: string;
   description?: string;
   urlSlug?: string;
-  categor: string;
+  category: string;
   isStandardCampaign: boolean;
   isDefaultCampaign: boolean;
   isPrivateCampaign: boolean;
-  promoCodes: string[];
+  promocodes: string[];
   links: string [];
 }

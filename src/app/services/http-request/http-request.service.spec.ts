@@ -36,7 +36,7 @@ describe('HttpRequestService', () => {
 
     spyOn(httpRequest, 'get');
 
-    service.getByIdRequest('uri1', 'uri2');
+    service.getByQueryRequest('myendpoint/one', 'first,second,third', '?q=one');
 
     expect(httpRequest.get).toHaveBeenCalled();
   });

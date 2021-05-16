@@ -1,5 +1,3 @@
-// import { featureKey } from './app-store/mweb-store/selectors/campaigns.selector';
-import { MWEB_FEATURE_KEY } from './shared/constants';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +15,8 @@ import { CampaignsComponent } from './components/campaigns/campaigns.component';
 import { NavComponent } from './components/nav/nav.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProductEffects } from './app-store/effects/products.effect';
+import { ProductsComponent } from './components/products/products.component';
 
 @NgModule({
   declarations: [
@@ -24,14 +24,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HomeComponent,
     CampaignsComponent,
     NavComponent,
-    LoaderComponent
+    LoaderComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([CampaignsEffects]),
+    EffectsModule.forRoot([CampaignsEffects, ProductEffects]),
     StoreDevtoolsModule.instrument(),
     NgbModule
 
