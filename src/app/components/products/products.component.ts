@@ -26,7 +26,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.store.select(getProducts).pipe(
       takeUntil(this.ngUnsubscribe)
     ).subscribe((products) => {
-      this.products = products;
+      if (products) {
+        this.products = products;
+      }
     });
   }
 
