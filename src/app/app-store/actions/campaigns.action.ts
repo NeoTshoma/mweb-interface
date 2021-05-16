@@ -6,7 +6,7 @@ export const GetAllCampaigns = createAction(
 );
 export const GetAllCampaignsSuccess = createAction(
   '[CAMPAIGNS] Get all campaigns success',
-  props<{ campaigns: Campaigns[] }>()
+  props<{ campaigns: Campaigns }>()
 );
 
 export const GetAllCampaignsError = createAction(

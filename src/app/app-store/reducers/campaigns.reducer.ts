@@ -11,7 +11,7 @@ const reducer = createReducer(
     {
       ...state,
       campaignsLoading: true,
-      campaigns: [],
+      campaigns: null,
       campaingsErrors: null
     }
   )),
@@ -26,7 +26,7 @@ const reducer = createReducer(
     {
       ...state,
       campaignsLoading: false,
-      campaigns: [],
+      campaigns: null,
       campaingsErrors: errors
     }
   ))

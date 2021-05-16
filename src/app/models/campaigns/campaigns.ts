@@ -1,4 +1,13 @@
 export class Campaigns {
+  link: Link;
+  campaigns: Campaign[];
+}
+
+export class Link {
+  link: string[];
+}
+
+export class Campaign {
   code: string;
   name: string;
   description?: string;

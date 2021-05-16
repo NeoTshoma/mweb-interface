@@ -1,7 +1,7 @@
 import { Campaigns } from './../models/campaigns/campaigns';
 
 export interface ICampaignState {
-  campaigns: Campaigns[];
+  campaigns: Campaigns;
   campaignsLoading: boolean;
   campaingsErrors: any;
 }
@@ -11,7 +11,7 @@ export interface IMwebState {
 }
 
 export const initialState: ICampaignState = {
-  campaigns: [],
+  campaigns: null,
   campaignsLoading: false,
   campaingsErrors: null
 };
