@@ -1,32 +1,37 @@
-<div class="col-3">
-  <ngb-accordion activeIds="campaigns">
-    <ngb-panel id="campaigns" title="Campaigns And Providers">
-      <ng-template ngbPanelContent>
-        <app-loader *ngIf="(campaignsLoading$| async)"></app-loader>
-        <div *ngIf="!(campaignsLoading$| async)">
-          <h6>Select fibre campaign</h6>
-          <span *ngFor="let campaign of campaigns.campaigns; let i = index" class="d-block mb-2">
-            <input type="radio" [value]="campaign.name" name="campaign" [checked]="i === 0" />
-            {{ campaign.name }}
-          </span>
-
-          <div class="mt-5">
-            <h6>Fibre providers</h6>
-            <span *ngFor="let provider of providers" class="d-block mb-2">
-              <input type="checkbox" [value]="provider.name" />
-              {{ provider.name }}
+<div class="row">
+  <div class="col-3">
+    <ngb-accordion activeIds="campaigns">
+      <ngb-panel id="campaigns" title="Campaigns And Providers">
+        <ng-template ngbPanelContent>
+          <app-loader *ngIf="(campaignsLoading$| async)"></app-loader>
+          <div *ngIf="!(campaignsLoading$| async)">
+            <h6>Select fibre campaign</h6>
+            <span *ngFor="let campaign of campaigns.campaigns; let i = index" class="d-block mb-2">
+              <input type="radio" [value]="campaign.name" name="campaign" [checked]="i === 0" (change)="getProducts(campaign)" />
+              {{ campaign.name }}
             </span>
-          </div>
 
-          <div class="mt-5">
-            <h6>Price ranges</h6>
-            <span *ngFor="let price of prices" class="d-block mb-2">
-              <input type="checkbox" [value]="price.max" />
-              {{ price.label }}
-            </span>
+            <div class="mt-5">
+              <h6>Fibre providers</h6>
+              <span *ngFor="let provider of providers" class="d-block mb-2">
+                <input type="checkbox" [value]="provider.name" />
+                {{ provider.name }}
+              </span>
+            </div>
+
+            <div class="mt-5">
+              <h6>Price ranges</h6>
+              <span *ngFor="let price of prices" class="d-block mb-2">
+                <input type="checkbox" [value]="price.max" />
+                {{ price.label }}
+              </span>
+            </div>
           </div>
-        </div>
-      </ng-template>
-    </ngb-panel>
-  </ngb-accordion>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+  <div class="col-9">
+    <app-products></app-products>
+  </div>
 </div>

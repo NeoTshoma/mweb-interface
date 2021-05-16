@@ -16,6 +16,6 @@ export class Campaign {
   isStandardCampaign: boolean;
   isDefaultCampaign: boolean;
   isPrivateCampaign: boolean;
-  promoCodes: string[];
+  promocodes: string[];
   links: string [];
 }
