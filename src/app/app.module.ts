@@ -17,6 +17,8 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductEffects } from './app-store/effects/products.effect';
 import { ProductsComponent } from './components/products/products.component';
+import { ProviderImagesComponent } from './components/provider-images/provider-images.component';
+import { ImagesService } from './services/images/images.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { ProductsComponent } from './components/products/products.component';
     CampaignsComponent,
     NavComponent,
     LoaderComponent,
-    ProductsComponent
+    ProductsComponent,
+    ProviderImagesComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,8 @@ import { ProductsComponent } from './components/products/products.component';
   ],
   providers: [
     CampaignsService,
-    HttpRequestService
+    HttpRequestService,
+    ImagesService
   ],
   bootstrap: [AppComponent]
 })
