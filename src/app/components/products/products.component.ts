@@ -70,14 +70,11 @@ export class ProductsComponent implements OnInit, OnDestroy, OnChanges {
 
     selectedProducts = selectedProducts.filter(this.filterByPriceRanges);
 
-    // sort by price from lowest to highest
     selectedProducts = selectedProducts.sort((pa, pb) => pa.productRate - pb.productRate);
-
     return selectedProducts;
   }
 
   filterByPriceRanges = (product) => {
-    // If no price range has been selected then include all products
     if (this.selectedPriceRanges.length === 0) {
       return true;
     }
