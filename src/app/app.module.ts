@@ -18,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductEffects } from './app-store/effects/products.effect';
 import { ProductsComponent } from './components/products/products.component';
 import { ProviderImagesComponent } from './components/provider-images/provider-images.component';
+import { ImagesService } from './services/images/images.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ProviderImagesComponent } from './components/provider-images/provider-i
   ],
   providers: [
     CampaignsService,
-    HttpRequestService
+    HttpRequestService,
+    ImagesService
   ],
   bootstrap: [AppComponent]
 })
