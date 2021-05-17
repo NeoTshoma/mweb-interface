@@ -44,10 +44,7 @@ export class ProductsComponent implements OnInit, OnDestroy, OnChanges {
           this.promoCodeProducts.push(this.getProductsFromPromo(product));
         });
 
-        this.promoCodeProducts.map((pc: any) => {
-          this.summarizedProducts.push(...pc);
-        });
-
+        this.summarizedProducts = this.products.reduce((prods, pc) => [...prods, ...this.getProductsFromPromo(pc)], []);
         this.providers = [...new Set(this.summarizedProducts.map(p => p.provider))];
         this.getProviders.emit(this.providers);
       }
