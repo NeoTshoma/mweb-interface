@@ -1,0 +1,12 @@
+:host ::ng-deep  {
+
+  div.card, .btn {
+    border-radius: 0;
+  }
+
+  .btn-link {
+    text-decoration: none;
+    color: black;
+  }
+
+}
