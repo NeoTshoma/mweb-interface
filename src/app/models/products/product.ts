@@ -5,6 +5,13 @@ export class PromoCodeProduct {
   promoCodeTagLine: string;
 }
 
+export class SummarizedProduct {
+  productCode: string;
+  productName: string;
+  productRate: number;
+  provider: string;
+}
+
 export class Product {
   productCode: string;
   productName: string;

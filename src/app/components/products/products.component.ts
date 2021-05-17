@@ -1,6 +1,6 @@
 import { getProducts, getProductsErrors, getProductsLoading } from './../../app-store/selectors/products.selector';
-import { PromoCodeProduct } from './../../models/products/product';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PromoCodeProduct, SummarizedProduct } from './../../models/products/product';
+import { Component, OnDestroy, OnInit, Output, EventEmitter, Input, OnChanges } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { IMwebState } from 'src/app/app-store/state';
 import { Store } from '@ngrx/store';
@@ -11,11 +11,23 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit, OnDestroy, OnChanges {
+
+  @Output() getProviders: EventEmitter<string[]> = new EventEmitter();
+  @Input() providerFilters: any;
+  @Input() priceFilter: string;
+
   products: PromoCodeProduct[];
   private ngUnsubscribe = new Subject();
   productsLoading$: Observable<boolean>;
   productsErrors$: Observable<any>;
+  summarizedProducts: SummarizedProduct[] = [];
+  promoCodeProducts: PromoCodeProduct[] = [];
+  selectedProducts: SummarizedProduct[] = [];
+  selectedProviderSet: any;
+  providers: string[];
+  // selectedProviders: string[] = [];
+  selectedPriceRanges: any[] = [];
 
   constructor(private store: Store<IMwebState>) { }
 
@@ -28,12 +40,67 @@ export class ProductsComponent implements OnInit, OnDestroy {
     ).subscribe((products) => {
       if (products) {
         this.products = products;
+
+        this.products.map((product) => {
+          this.promoCodeProducts.push(this.getProductsFromPromo(product));
+        });
+
+        this.promoCodeProducts.map((pc: any) => {
+          this.summarizedProducts.push(...pc);
+        });
+
+        this.providers = [...new Set(this.summarizedProducts.map(p => p.provider))];
+        this.getProviders.emit(this.providers);
       }
     });
   }
 
-  ngOnDestroy() {
+  getSummarizedProduct = ({ productCode, productName, productRate, subcategory }) => {
+    const provider = subcategory.replace('Uncapped', '').replace('Capped', '').trim();
+    return { productCode, productName, productRate, provider };
+  }
 
+  getProductsFromPromo = (pc) => {
+    const promoCode = pc.promoCode;
+    return pc.products.reduce((prods, p) => [...prods, this.getSummarizedProduct(p)], []);
+  }
+
+  filterProductByProvider(providers) {
+    const selectedProviderSet = new Set(providers);
+    let selectedProducts = this.summarizedProducts.filter(p => selectedProviderSet.has(p.provider));
+    // // filter products by price range
+    // selectedProducts = selectedProducts.filter(filterByPriceRanges)
+
+    // sort by price from lowest to highest
+    selectedProducts = selectedProducts.sort((pa, pb) => pa.productRate - pb.productRate);
+
+    return selectedProducts;
+  }
+
+  filterByPriceRanges = (product) => {
+    // If no price range has been selected then include all products
+    if (this.selectedPriceRanges.length === 0) {
+      return true;
+    }
+
+    for (const range of this.selectedPriceRanges) {
+      const price = product.productRate;
+      if (price >= range.min && price <= range.max) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  ngOnChanges() {
+    this.selectedProducts = this.filterProductByProvider(this.providerFilters ?  this.providerFilters.providers : [] );
+  }
+
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
 }

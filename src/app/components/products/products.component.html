@@ -5,15 +5,20 @@
   </div>
 </div>
 <div class="row" *ngIf="!(productsLoading$ | async)">
-  <div class="col-6 mt-3" *ngFor="let product of products">
+  <div class="col-6 mt-3" *ngFor="let product of selectedProducts">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">{{ product.promoCodeDescription }}</h6>
+        <h6 class="card-title">{{ product.productName }}</h6>
         <p class="card-text">
-          {{ product.promoCodeTagLine ? product.promoCodeTagLine : 'Another one of our lovely offerings'}}
+          R{{ product.productRate}}
         </p>
-        <a href="#" class="btn btn-primary">Check Coverage</a>
+        <button class="btn btn-secondary">Check Coverage</button>
       </div>
+    </div>
+  </div>
+  <div class="col-12" *ngIf="selectedProducts.length === 0">
+    <div class="alert alert-primary" role="alert">
+      No Products found.
     </div>
   </div>
 </div>

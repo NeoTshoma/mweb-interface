@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Campaign, Campaigns } from 'src/app/models/campaigns/campaigns';
 import { Provider } from 'src/app/models/providers/providers';
 import { PriceRange } from 'src/app/models/price-ranges/price-range';
+import { getProductsLoading } from 'src/app/app-store/selectors/products.selector';
 
 @Component({
   selector: 'app-campaigns',
@@ -17,25 +18,21 @@ import { PriceRange } from 'src/app/models/price-ranges/price-range';
 export class CampaignsComponent implements OnInit, OnDestroy {
   private ngUsubscribe = new Subject();
   campaignsLoading$: Observable<boolean>;
+  productsLoading$: Observable<boolean>;
   campaignsErrors$: Observable<any>;
   campaigns: Campaigns;
   providers: Provider[];
   prices: PriceRange[];
   promoCodes: string[];
+  selectedProviders: string[] = [];
+  filterProviders: any;
 
   constructor(private store: Store<IMwebState>) { }
 
   ngOnInit() {
     this.campaignsLoading$ = this.store.select(getCampaignsLoading);
     this.campaignsErrors$ = this.store.select(getCampaignErrors);
-
-    this.providers = [
-      {
-        name: 'Vuma Reach'
-      },
-      {
-        name: 'Mitchells Fibre'
-      }];
+    this.productsLoading$ = this.store.select(getProductsLoading);
 
     this.prices = [{
       min: 0,
@@ -70,6 +67,20 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     const promocodes = campaign.promocodes.join();
 
     this.store.dispatch(GetAllProducts({promocodes}));
+  }
+
+  setProviders(providers: Provider[]) {
+    this.providers = providers;
+  }
+
+  filterProvider(provider: string, event) {
+    if (event && event.target.checked) {
+      this.selectedProviders.push(provider);
+    } else {
+      this.selectedProviders.splice(this.selectedProviders.indexOf(provider), 1);
+    }
+
+    this.filterProviders = {providers: this.selectedProviders, checked: event.target.checked };
   }
 
   ngOnDestroy() {
