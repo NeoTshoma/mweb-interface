@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Campaign, Campaigns } from 'src/app/models/campaigns/campaigns';
 import { Provider } from 'src/app/models/providers/providers';
 import { PriceRange } from 'src/app/models/price-ranges/price-range';
+import { getProductsLoading } from 'src/app/app-store/selectors/products.selector';
 
 @Component({
   selector: 'app-campaigns',
@@ -17,25 +18,23 @@ import { PriceRange } from 'src/app/models/price-ranges/price-range';
 export class CampaignsComponent implements OnInit, OnDestroy {
   private ngUsubscribe = new Subject();
   campaignsLoading$: Observable<boolean>;
+  productsLoading$: Observable<boolean>;
   campaignsErrors$: Observable<any>;
   campaigns: Campaigns;
   providers: Provider[];
   prices: PriceRange[];
   promoCodes: string[];
+  selectedProviders: string[] = [];
+  selectedPriceRanges: PriceRange[] = [];
+  filterProviders: any;
+  filterPrices: any;
 
   constructor(private store: Store<IMwebState>) { }
 
   ngOnInit() {
     this.campaignsLoading$ = this.store.select(getCampaignsLoading);
     this.campaignsErrors$ = this.store.select(getCampaignErrors);
-
-    this.providers = [
-      {
-        name: 'Vuma Reach'
-      },
-      {
-        name: 'Mitchells Fibre'
-      }];
+    this.productsLoading$ = this.store.select(getProductsLoading);
 
     this.prices = [{
       min: 0,
@@ -69,7 +68,31 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   getProducts(campaign: Campaign) {
     const promocodes = campaign.promocodes.join();
 
-    this.store.dispatch(GetAllProducts({promocodes}));
+    this.store.dispatch(GetAllProducts({ promocodes }));
+  }
+
+  setProviders(providers: Provider[]) {
+    this.providers = providers;
+  }
+
+  filterByProvider(provider: string, event) {
+    if (event && event.target.checked) {
+      this.selectedProviders.push(provider);
+    } else {
+      this.selectedProviders.splice(this.selectedProviders.indexOf(provider), 1);
+    }
+
+    this.filterProviders = { providers: this.selectedProviders };
+  }
+
+  filterByPrice(price: PriceRange, event) {
+    if (event && event.target.checked) {
+      this.selectedPriceRanges.push(price);
+    } else {
+      this.selectedPriceRanges.splice(this.selectedPriceRanges.indexOf(price), 1);
+    }
+
+    this.filterPrices = { prices: this.selectedPriceRanges };
   }
 
   ngOnDestroy() {
