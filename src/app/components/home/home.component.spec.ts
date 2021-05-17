@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { IMwebState } from 'src/app/app-store/state';
+import { ProviderImagesComponent } from '../provider-images/provider-images.component';
 
 import { HomeComponent } from './home.component';
 
@@ -18,7 +19,7 @@ describe('HomeComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent ],
+      declarations: [ HomeComponent, ProviderImagesComponent ],
       providers: [provideMockStore({initialState})]
     })
     .compileComponents();

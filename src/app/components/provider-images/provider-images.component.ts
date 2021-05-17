@@ -15,7 +15,6 @@ export class ProviderImagesComponent implements OnInit {
   ngOnInit() {
 
     this.fibreProviders = this.imagesService.getImageProviders();
-    console.log('providers --', this.fibreProviders);
   }
 
 }

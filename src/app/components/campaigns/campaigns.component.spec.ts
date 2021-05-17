@@ -15,9 +15,11 @@ describe('CampaignsComponent', () => {
 
   beforeEach(async(() => {
     const initialState = {
-      campaignsLoading: true,
-      campaigns: {},
-      campaingsErrors: null
+      MwebAppState: {
+        campaignsLoading: true,
+        campaigns: {},
+        campaingsErrors: null
+      }
     };
     TestBed.configureTestingModule({
       declarations: [CampaignsComponent, ProductsComponent],
