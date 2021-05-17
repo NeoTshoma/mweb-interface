@@ -25,7 +25,9 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   prices: PriceRange[];
   promoCodes: string[];
   selectedProviders: string[] = [];
+  selectedPriceRanges: PriceRange[] = [];
   filterProviders: any;
+  filterPrices: any;
 
   constructor(private store: Store<IMwebState>) { }
 
@@ -66,21 +68,31 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   getProducts(campaign: Campaign) {
     const promocodes = campaign.promocodes.join();
 
-    this.store.dispatch(GetAllProducts({promocodes}));
+    this.store.dispatch(GetAllProducts({ promocodes }));
   }
 
   setProviders(providers: Provider[]) {
     this.providers = providers;
   }
 
-  filterProvider(provider: string, event) {
+  filterByProvider(provider: string, event) {
     if (event && event.target.checked) {
       this.selectedProviders.push(provider);
     } else {
       this.selectedProviders.splice(this.selectedProviders.indexOf(provider), 1);
     }
 
-    this.filterProviders = {providers: this.selectedProviders, checked: event.target.checked };
+    this.filterProviders = { providers: this.selectedProviders };
+  }
+
+  filterByPrice(price: PriceRange, event) {
+    if (event && event.target.checked) {
+      this.selectedPriceRanges.push(price);
+    } else {
+      this.selectedPriceRanges.splice(this.selectedPriceRanges.indexOf(price), 1);
+    }
+
+    this.filterPrices = { prices: this.selectedPriceRanges };
   }
 
   ngOnDestroy() {

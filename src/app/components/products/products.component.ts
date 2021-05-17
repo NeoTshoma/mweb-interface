@@ -15,7 +15,7 @@ export class ProductsComponent implements OnInit, OnDestroy, OnChanges {
 
   @Output() getProviders: EventEmitter<string[]> = new EventEmitter();
   @Input() providerFilters: any;
-  @Input() priceFilter: string;
+  @Input() priceFilter: any;
 
   products: PromoCodeProduct[];
   private ngUnsubscribe = new Subject();
@@ -26,7 +26,6 @@ export class ProductsComponent implements OnInit, OnDestroy, OnChanges {
   selectedProducts: SummarizedProduct[] = [];
   selectedProviderSet: any;
   providers: string[];
-  // selectedProviders: string[] = [];
   selectedPriceRanges: any[] = [];
 
   constructor(private store: Store<IMwebState>) { }
@@ -68,8 +67,8 @@ export class ProductsComponent implements OnInit, OnDestroy, OnChanges {
   filterProductByProvider(providers) {
     const selectedProviderSet = new Set(providers);
     let selectedProducts = this.summarizedProducts.filter(p => selectedProviderSet.has(p.provider));
-    // // filter products by price range
-    // selectedProducts = selectedProducts.filter(filterByPriceRanges)
+
+    selectedProducts = selectedProducts.filter(this.filterByPriceRanges);
 
     // sort by price from lowest to highest
     selectedProducts = selectedProducts.sort((pa, pb) => pa.productRate - pb.productRate);
@@ -94,6 +93,7 @@ export class ProductsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
+    this.selectedPriceRanges = this.priceFilter ? this.priceFilter.prices : [];
     this.selectedProducts = this.filterProductByProvider(this.providerFilters ?  this.providerFilters.providers : [] );
   }
 
