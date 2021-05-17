@@ -72,6 +72,12 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   }
 
   setProviders(providers: Provider[]) {
+    this.selectedProviders = [];
+    this.selectedPriceRanges = [];
+
+    this.filterPrices = { prices: this.selectedPriceRanges };
+    this.filterProviders = { providers: this.selectedProviders };
+
     this.providers = providers;
   }
 

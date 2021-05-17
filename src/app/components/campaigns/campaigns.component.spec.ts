@@ -66,6 +66,8 @@ describe('CampaignsComponent', () => {
     component.setProviders(providers);
 
     expect(component.providers.length).toEqual(3);
+    expect(component.selectedPriceRanges.length).toEqual(0);
+    expect(component.selectedProviders.length).toEqual(0);
   });
 
   it('should add a provider to filter by when the fibre provider checkbox is clicked', () => {
