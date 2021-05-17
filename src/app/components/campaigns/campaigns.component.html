@@ -1,5 +1,41 @@
 <div class="row">
-  <div class="col-4 col-md-3">
+  <div class="d-md-none">
+    <app-loader *ngIf="(campaignsLoading$| async)"></app-loader>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle w-100" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Filter Products
+      </button>
+      <div class="dropdown-menu p-3 w-100" aria-labelledby="dropdownMenuButton1">
+        <div *ngIf="!(campaignsLoading$| async)">
+          <h6>Fibre campaigns</h6>
+          <span *ngFor="let campaign of campaigns.campaigns; let i = index" class="d-block mb-2">
+            <input type="radio" [value]="campaign.name" name="campaign" [checked]="i === 0"
+              (change)="getProducts(campaign)" />
+            {{ campaign.name }}
+          </span>
+          <div class="mt-5">
+            <h6>Fibre providers</h6>
+            <app-loader *ngIf="(productsLoading$| async)"></app-loader>
+            <span *ngFor="let provider of providers; let j = index" class="d-block mb-2"
+              [class.d-none]="(productsLoading$| async)">
+              <input type="checkbox" [value]="provider" (change)="filterByProvider(provider, $event)" />
+              {{ provider }}
+            </span>
+          </div>
+
+          <div class="mt-5">
+            <h6>Price ranges</h6>
+            <span *ngFor="let price of prices" class="d-block mb-2">
+              <input type="checkbox" [value]="price.max" (change)="filterByPrice(price, $event)" />
+              {{ price.label }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-none d-md-block col-md-3">
     <ngb-accordion activeIds="campaigns">
       <ngb-panel id="campaigns" title="Campaigns And Providers">
         <ng-template ngbPanelContent>
@@ -33,7 +69,7 @@
       </ngb-panel>
     </ngb-accordion>
   </div>
-  <div class="col-8 col-md-9">
+  <div class="col-12 col-md-9">
     <app-products (getProviders)="setProviders($event)" [providerFilters]="filterProviders"
       [priceFilter]="filterPrices"></app-products>
   </div>
