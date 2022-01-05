@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ImagesService } from 'src/app/services/images/images.service';
 
@@ -10,7 +11,8 @@ describe('ProviderImagesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ProviderImagesComponent ],
-      providers: [ImagesService]
+      providers: [ImagesService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));

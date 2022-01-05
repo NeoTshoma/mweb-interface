@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -20,7 +21,8 @@ describe('HomeComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [ HomeComponent, ProviderImagesComponent ],
-      providers: [provideMockStore({initialState})]
+      providers: [provideMockStore({initialState})],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));

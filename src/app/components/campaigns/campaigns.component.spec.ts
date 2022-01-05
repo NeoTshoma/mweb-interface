@@ -7,6 +7,7 @@ import { Campaign } from 'src/app/models/campaigns/campaigns';
 import { ProductsComponent } from '../products/products.component';
 import { Provider } from 'src/app/models/providers/providers';
 import { CampaignsComponent } from './campaigns.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('CampaignsComponent', () => {
   let component: CampaignsComponent;
@@ -17,13 +18,14 @@ describe('CampaignsComponent', () => {
     const initialState = {
       MwebAppState: {
         campaignsLoading: true,
-        campaigns: {},
+        campaigns: null,
         campaingsErrors: null
       }
     };
     TestBed.configureTestingModule({
       declarations: [CampaignsComponent, ProductsComponent],
-      providers: [provideMockStore({ initialState })]
+      providers: [provideMockStore({ initialState })],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));
